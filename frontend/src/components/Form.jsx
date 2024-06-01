@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useState } from "react";
 
@@ -10,7 +11,15 @@ const Form = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(`Input value: ${inputValue}`);
+    axios
+      .post("http://localhost:8000", { prompt: inputValue })
+      .then((res) => {
+        console.log(res.data);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.error("Error submitting form: ", err);
+      });
   };
 
   return (
