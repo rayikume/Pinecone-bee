@@ -26,42 +26,5 @@ def create_vector_db(urls):
     database = FAISS.from_documents(docs, embedding)
     return database
 
-# def main():
-#     options = webdriver.ChromeOptions()
-#     options.add_argument("--headless")
-#     service = Service(executable_path="chromedriver.exe")
-#     driver = webdriver.Chrome(service=service)
-
-#     try:
-#         urls = [
-#             'https://u.ae/en/information-and-services#/',
-#             'https://u.ae/en/information-and-services/top-government-services',
-#             'https://u.ae/en/information-and-services/visa-and-emirates-id',
-#             'https://u.ae/en/information-and-services/jobs',
-#             'https://u.ae/en/information-and-services/education',
-#             'https://u.ae/en/information-and-services/business',
-#             'https://u.ae/en/information-and-services/moving-to-the-uae',
-#             'https://u.ae/en/information-and-services/justice-safety-and-the-law',
-#             'https://u.ae/en/information-and-services/visiting-and-exploring-the-uae',
-#             'https://u.ae/en/information-and-services/transportation',
-#             'https://u.ae/en/information-and-services/finance-and-investment',
-#             'https://u.ae/en/information-and-services/environment-and-energy',
-#             'https://u.ae/en/information-and-services/housing',
-#             'https://u.ae/en/information-and-services/health-and-fitness',
-#             'https://u.ae/en/information-and-services/passports-and-traveling',
-#             'https://u.ae/en/information-and-services/public-holidays-and-religious-affairs',
-#             'https://u.ae/en/information-and-services/infrastructure',
-#             'https://u.ae/en/information-and-services/social-affairs',
-#             'https://u.ae/en/information-and-services/charity-and-humanitarian-work',
-#             'https://u.ae/en/information-and-services/g2g-services',
-#         ]
-
-#         print(create_vector_db(urls))
-#     finally:
-#         driver.quit()
-
-# if __name__ == "__main__":
-#     main()
-
 
     
