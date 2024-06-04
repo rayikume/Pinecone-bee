@@ -2,9 +2,56 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 export const Models = () => {
-  const [data, setData] = useState([{}]);
+  const [data, setData] = useState(null);
 
-  return <p></p>;
+  useEffect(() => {
+    fetch("http://127.0.0.1:5000/models/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setData(data);
+      });
+  }, []);
+
+  return (
+    <>
+      <div className="flex flex-row gap-5 m-10">
+        <div className="summary_box .gradient-border">
+          <h1 className="font-satoshi font-bold text-xl orange_gradient">
+            ✦ ChatGPT-3 Turbo
+          </h1>
+          <br />
+          <p className="font-inter font-medium text-sm text-white">
+            {data && data["ChatGPT3"] ? data["ChatGPT3"] : ""}
+          </p>
+        </div>
+        <div className="summary_box .gradient-border">
+          <h1 className="font-satoshi font-bold text-xl orange_gradient">
+            ✦ ChatGPT-4
+          </h1>
+          <br />
+          <p className="font-inter font-medium text-sm text-white">
+            {data && data["ChatGPT4"] ? data["ChatGPT4"] : ""}
+          </p>
+        </div>
+        <div className="summary_box .gradient-border">
+          <h1 className="font-satoshi font-bold text-xl orange_gradient">
+            ✦ Llama Chat
+          </h1>
+          <br />
+          <p className="font-inter font-medium text-sm text-white">
+            {data && data["llama"] ? data["llama"] : ""}
+          </p>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Models;

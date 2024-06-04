@@ -29,6 +29,7 @@ const Form = () => {
         >
           <input
             className="url_input peer"
+            placeholder="Enter a prompt"
             value={inputValue}
             onChange={handleInputChange}
           ></input>
