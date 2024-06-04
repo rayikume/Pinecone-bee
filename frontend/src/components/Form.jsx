@@ -10,19 +10,31 @@ const Form = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(`Input value: ${inputValue}`);
+    const question = { question: inputValue };
+
+    fetch("http://localhost:5000/models/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(question),
+    }).then(console.log(JSON.stringify(question)));
   };
 
   return (
-    <section className="">
-      <div className="">
-        <form onSubmit={handleSubmit}>
+    <section className="mt-16 w-full max-w-xl">
+      <div className="flex flex-col w-full gap-2">
+        <form
+          onSubmit={handleSubmit}
+          method="post"
+          className="relative flex justify-center items-center"
+        >
           <input
-            className="w-full"
+            className="url_input peer"
             value={inputValue}
             onChange={handleInputChange}
           ></input>
-          <button type="submit">Submit</button>
+          <button type="submit" className="submit_btn text-gray-100">
+            Submit
+          </button>
         </form>
       </div>
     </section>

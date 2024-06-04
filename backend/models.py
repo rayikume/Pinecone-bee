@@ -1,9 +1,13 @@
 from langchain_openai import ChatOpenAI
+from langchain_openai.llms import OpenAI
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 from scraper.scraper import create_vector_db
+from flask import Blueprint, jsonify, request
 import gc
 import replicate
+
+models_bp = Blueprint(__name__, "models")
 
 load_dotenv()
 
@@ -60,7 +64,7 @@ def get_response_ChatGPT3(database, query, tk=8):
 
     response = chain.invoke({"question": query, "docs": docs_merge})
     response_content = response.content
-    response_formatted = response_content.replace("\n", "")
+    response_formatted = response_content.replace("\n", " ")
 
     return response_formatted
 
@@ -72,7 +76,7 @@ def get_response_ChatGPT4(database, query, tk=8):
 
     prompt = PromptTemplate(
         input_variables=["question", "docs"],
-        template="""
+        template= """
             You are a AI Assistant that help answering the user any question regarding United Arab Emirates laws and culture, that include any questions about: 
             Services of each ministry, Visa laws and regulations, jobs, education, business, moving to the uae, justice safety and law, visiting and exploring the uae,
             transportation, finance and investment, environment and energy, housing, health and fitness, passport and traveling guidlines, public hoildays, infrastructure,
@@ -92,13 +96,13 @@ def get_response_ChatGPT4(database, query, tk=8):
 
     response = chain.invoke({"question": query, "docs": docs_merge})
     response_content = response.content
-    response_formatted = response_content.replace("\n", "")
+    response_formatted = response_content.replace("\n", " ")
 
     return response_formatted
 
 def get_response_llama(database, query):
     docs = database.similarity_search(query)
-    tmp = "You are a AI Assistant that help answering the user any question regarding United Arab Emirates laws and culture, that include any questions about: Services of each ministry, Visa laws and regulations, jobs, education, business, moving to the uae, justice safety and law, visiting and exploring the uae, transportation, finance and investment, environment and energy, housing, health and fitness, passport and traveling guidlines, public hoildays, infrastructure social affairs, charity and G2G. By ONLY using this database consist of scrapped information from the offical UAE government website: {docs} If you feel like you don't have enough information to answer the question, just say I don't know. If the question provided not in any way related to United Arab Emirates, simply say that the question is not related to the subject. Your answers should be detailed."
+    tmp = f"You are a AI Assistant that help answering the user any question regarding United Arab Emirates laws and culture, that include any questions about: Services of each ministry, Visa laws and regulations, jobs, education, business, moving to the uae, justice safety and law, visiting and exploring the uae, transportation, finance and investment, environment and energy, housing, health and fitness, passport and traveling guidlines, public hoildays, infrastructure social affairs, charity and G2G. By ONLY using this database consist of scrapped information from the offical UAE government website: {docs} If you feel like you don't have enough information to answer the question, just say I don't know. If the question provided not in any way related to United Arab Emirates, simply say that the question is not related to the subject. Your answers should be detailed."
 
     input = {
         "top_p": 1,
@@ -115,11 +119,38 @@ def get_response_llama(database, query):
 
     return "".join(output)
 
-def main():
-    question = "how can i apply for a visa"
-    lluma_response = get_response_llama(vector_database, question)
-    print("LLAMA: " + lluma_response + "|||||")
+stored_responses = {
+    "ChatGPT3": "",
+    "ChatGPT4": "",
+    "llama": ""
+}
 
-if __name__ == "__main__":
-    main()
-    gc.collect()
+@models_bp.route("/", methods=["POST", "GET", "OPTIONS"])
+def models():
+    global stored_responses
+    
+    if request.method == 'OPTIONS':
+        response = jsonify({"status": "ok"})
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+        return response, 200
+    
+    if request.method == "POST":
+        data = request.get_json()
+        inputValue = data['question']
+        stored_responses["ChatGPT3"] = get_response_ChatGPT3(vector_database, inputValue)
+        stored_responses["ChatGPT4"] = get_response_ChatGPT4(vector_database, inputValue)
+        stored_responses["llama"] = get_response_llama(vector_database, inputValue)
+        gc.collect()
+        
+        response = jsonify(stored_responses)
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response, 200
+    
+    if request.method == "GET": 
+        response = jsonify(stored_responses)
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response, 200
+
+    return jsonify({"error": "Invalid request method"}), 405

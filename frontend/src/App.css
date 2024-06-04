@@ -2,45 +2,129 @@
 @tailwind components;
 @tailwind utilities;
 
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.main {
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  padding: 120px 24px 160px 24px;
+  pointer-events: none;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.main:before {
+  background: radial-gradient(
+    circle,
+    rgba(117, 117, 117, 0.342) 0,
+    #000000ce 100%
+  );
+  position: absolute;
+  content: "";
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  top: 0;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.main:after {
+  content: "";
+  background-size: 20px 20px;
+  background-image: linear-gradient(
+      to right,
+      rgb(82, 82, 82) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgb(82, 82, 82) 1px, transparent 1px);
+  background-color: #000000;
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  opacity: 0.6;
+  filter: invert(0);
+}
+
+.gradient {
+  height: fit-content;
+  z-index: 3;
+  width: 100%;
+  max-width: 1000px;
+  background-image: radial-gradient(
+      at 27% 37%,
+      hsla(215, 98%, 61%, 1) 0px,
+      transparent 0%
+    ),
+    radial-gradient(at 10% 29%, hsl(23, 96%, 43%, 1) 0px, transparent 60%),
+    radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 40%),
+    radial-gradient(at 79% 53%, hsla(333, 71%, 66%, 1) 0px, transparent 50%);
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  filter: blur(100px) saturate(150%);
+  top: 80px;
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 640px) {
+  .main {
+    padding: 0;
   }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Tailwind Styles */
+
+.app {
+  @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
 }
 
-.card {
-  padding: 2em;
+.black_btn {
+  @apply rounded-full border border-white bg-white py-1.5 px-5 text-sm text-black transition-all hover:bg-gradient-to-r  from-pink-400 via-orange-300 to-orange-500 hover:text-white;
 }
 
-.read-the-docs {
-  color: #888;
+.head_text {
+  @apply mt-5 text-5xl font-extrabold leading-[1.15] text-white sm:text-6xl text-center;
+}
+
+.orange_gradient {
+  @apply bg-gradient-to-r from-pink-400 via-orange-300 to-orange-500 bg-clip-text text-transparent;
+}
+
+.desc {
+  @apply mt-6 text-lg text-gray-100 sm:text-2xl text-center font-semibold;
+}
+
+.url_input {
+  @apply block w-full rounded-md border-2 border-x-gray-100 border-y-gray-100 bg-black/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur py-2.5 pl-10 pr-12 text-sm font-satoshi font-medium focus:border-black focus:outline-none focus:ring-0 text-gray-100 placeholder-gray-100 focus:placeholder:text-transparent;
+  padding-left: 15px;
+  font-family: satoshi;
+}
+
+.submit_btn {
+  @apply hover:border-gray-200 hover:bg-gray-200 absolute inset-y-0 right-0 my-1.5 mr-1.5 flex w-10 items-center justify-center rounded font-sans text-sm font-medium hover:text-black border-2 border-x-gray-100 border-y-gray-100 bg-black/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur;
+
+  width: 85px;
+  font-family: satoshi;
+  font-weight: bold;
+}
+
+.link_card {
+  @apply p-3 flex justify-start items-center flex-row border-2 border-x-gray-100 border-y-gray-100 bg-black/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur gap-3 rounded-lg cursor-pointer mt-2;
+}
+
+.copy_btn {
+  @apply w-7 h-7 rounded-full bg-white/90 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur flex justify-center items-center cursor-pointer;
+}
+
+.blue_gradient {
+  @apply font-black bg-gradient-to-r from-orange-600 via-orange-400 to-orange-300 bg-clip-text text-transparent;
+}
+
+.summary_box {
+  @apply rounded-xl border-2 border-x-gray-100 border-y-gray-100 bg-black/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-4;
+}
+
+.size {
+  width: 230px;
 }
