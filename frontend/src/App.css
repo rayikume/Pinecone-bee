@@ -55,7 +55,7 @@
       hsla(215, 98%, 61%, 1) 0px,
       transparent 0%
     ),
-    radial-gradient(at 10% 29%, hsl(23, 96%, 43%, 1) 0px, transparent 60%),
+    radial-gradient(at 10% 29%, #d75504 0px, transparent 60%),
     radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 40%),
     radial-gradient(at 79% 53%, hsla(333, 71%, 66%, 1) 0px, transparent 50%);
   position: absolute;
@@ -128,4 +128,8 @@
 
 .size {
   width: 230px;
+}
+
+.loading {
+  margin-top: 60px;
 }

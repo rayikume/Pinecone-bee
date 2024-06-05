@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import io from "socket.io-client";
+import { LoadingContext } from "../context/context";
 
 const socket = io("http://localhost:5000");
 
 const Form = () => {
   const [inputValue, setInputValue] = useState("");
+  const [loading, setLoading] = useContext(LoadingContext);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -27,6 +29,7 @@ const Form = () => {
     if (inputValue) {
       socket.emit("message", inputValue);
       setInputValue("");
+      setLoading(true);
     }
   };
 
