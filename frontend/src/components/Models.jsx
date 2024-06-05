@@ -14,6 +14,7 @@ export const Models = () => {
     socket.on("response", (data) => {
       setData(data);
       setLoading(false);
+      console.log(data);
     });
 
     return () => {
@@ -22,37 +23,67 @@ export const Models = () => {
     };
   }, []);
 
+  const getHighestScore = (response) => {
+    let maxScore = 0;
+    let bestModel = null;
+
+    for (const model in response) {
+      if (response[model].score > maxScore) {
+        maxScore = response[model].score;
+        bestModel = model;
+      }
+    }
+
+    console.log(bestModel);
+
+    return bestModel;
+  };
+
+  const bestModel = getHighestScore(data);
+
   return (
     <section>
       {loading ? (
         <img src={circlesLoop} className="loading" />
       ) : data ? (
         <div className="flex flex-row gap-5 m-10">
-          <div className="summary_box .gradient-border">
+          <div
+            className={`summary_box .gradient-border ${
+              "ChatGPT3" == bestModel && "best-response"
+            }`}
+          >
             <h1 className="font-satoshi font-bold text-xl orange_gradient">
               ✦ ChatGPT-3 Turbo
             </h1>
             <br />
             <p className="font-inter font-medium text-sm text-white">
-              {data && data["ChatGPT3"] ? data["ChatGPT3"] : ""}
+              {data && data["ChatGPT3"] ? data["ChatGPT3"]["response"] : ""}
             </p>
           </div>
-          <div className="summary_box .gradient-border">
+          <div
+            className={`summary_box .gradient-border ${
+              "ChatGPT4" == bestModel && "best-response"
+            }`}
+          >
             <h1 className="font-satoshi font-bold text-xl orange_gradient">
               ✦ ChatGPT-4
             </h1>
             <br />
             <p className="font-inter font-medium text-sm text-white">
-              {data && data["ChatGPT4"] ? data["ChatGPT4"] : ""}
+              {data && data["ChatGPT4"] ? data["ChatGPT4"]["response"] : ""}
             </p>
           </div>
-          <div className="summary_box .gradient-border">
+          <div
+            className={`summary_box .gradient-border ${
+              "llama" == bestModel && "best-response"
+            }`}
+          >
             <h1 className="font-satoshi font-bold text-xl orange_gradient">
               ✦ Llama Chat
             </h1>
             <br />
             <p className="font-inter font-medium text-sm text-white">
-              {data && data["llama"] ? data["llama"] : ""}
+              {data && data["llama"] ? data["llama"]["response"] : ""}
             </p>
           </div>
         </div>

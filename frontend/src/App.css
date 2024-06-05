@@ -133,3 +133,7 @@
 .loading {
   margin-top: 60px;
 }
+
+.best-response {
+  border-style: hidden;
+}
