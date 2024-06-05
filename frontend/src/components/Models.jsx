@@ -1,22 +1,36 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import io from "socket.io-client";
+
+const socket = io("http://localhost:5000");
 
 export const Models = () => {
   const [data, setData] = useState(null);
 
+  // useEffect(() => {
+  //   fetch("http://127.0.0.1:5000/models/", {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       setData(data);
+  //     });
+  // }, []);
+
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/models/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setData(data);
-      });
+    socket.on("response", (data) => {
+      setData(data);
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("message");
+    };
   }, []);
 
   return (

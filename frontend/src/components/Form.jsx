@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import io from "socket.io-client";
+
+const socket = io("http://localhost:5000");
 
 const Form = () => {
   const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Connected to server");
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("message");
+    };
+  }, []);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -10,13 +24,10 @@ const Form = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const question = { question: inputValue };
-
-    fetch("http://localhost:5000/models/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(question),
-    }).then(console.log(JSON.stringify(question)));
+    if (inputValue) {
+      socket.emit("message", inputValue);
+      setInputValue("");
+    }
   };
 
   return (

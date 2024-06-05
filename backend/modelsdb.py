@@ -4,6 +4,7 @@ from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 from scraper.scraper import create_vector_db
 from flask import Blueprint, jsonify, request
+from flask_socketio import send, emit, SocketIO
 import gc
 import replicate
 
@@ -125,32 +126,52 @@ stored_responses = {
     "llama": ""
 }
 
-@models_bp.route("/", methods=["POST", "GET", "OPTIONS"])
-def models():
+def register_events(socketio):
     global stored_responses
-    
-    if request.method == 'OPTIONS':
-        response = jsonify({"status": "ok"})
-        response.headers.add("Access-Control-Allow-Origin", "*")
-        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
-        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
-        return response, 200
-    
-    if request.method == "POST":
-        data = request.get_json()
-        inputValue = data['question']
-        stored_responses["ChatGPT3"] = get_response_ChatGPT3(vector_database, inputValue)
-        stored_responses["ChatGPT4"] = get_response_ChatGPT4(vector_database, inputValue)
-        stored_responses["llama"] = get_response_llama(vector_database, inputValue)
-        gc.collect()
-        
-        response = jsonify(stored_responses)
-        response.headers.add("Access-Control-Allow-Origin", "*")
-        return response, 200
-    
-    if request.method == "GET": 
-        response = jsonify(stored_responses)
-        response.headers.add("Access-Control-Allow-Origin", "*")
-        return response, 200
 
-    return jsonify({"error": "Invalid request method"}), 405
+    @socketio.on('connect')
+    def handle_connect():
+        print('Client connected')
+
+    @socketio.on('disconnect')
+    def handle_disconnect():
+        print('Client disconnected')
+
+    @socketio.on('message')
+    def handle_message(message):
+        print('Received message: ' + message)
+        socketio.send('Echo: ' + message)
+        stored_responses["ChatGPT3"] = get_response_ChatGPT3(vector_database, message)
+        stored_responses["ChatGPT4"] = get_response_ChatGPT4(vector_database, message)
+        stored_responses["llama"] = get_response_llama(vector_database, message)
+        socketio.emit('response', stored_responses)
+        
+    
+
+# def models(data):
+    
+#     if request.method == 'OPTIONS':
+#         response = jsonify({"status": "ok"})
+#         response.headers.add("Access-Control-Allow-Origin", "*")
+#         response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+#         response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+#         return response, 200
+    
+#     if request.method == "POST":
+#         data = request.get_json()
+#         inputValue = data['question']
+#         stored_responses["ChatGPT3"] = get_response_ChatGPT3(vector_database, inputValue)
+#         stored_responses["ChatGPT4"] = get_response_ChatGPT4(vector_database, inputValue)
+#         stored_responses["llama"] = get_response_llama(vector_database, inputValue)
+#         gc.collect()
+        
+#         response = jsonify(stored_responses)
+#         response.headers.add("Access-Control-Allow-Origin", "*")
+#         return response, 200
+    
+#     if request.method == "GET": 
+#         response = jsonify(stored_responses)
+#         response.headers.add("Access-Control-Allow-Origin", "*")
+#         return response, 200
+
+#     return jsonify({"error": "Invalid request method"}), 405
