@@ -19,10 +19,7 @@ class CustomEvaluator:
         ground_truth = self.get_ground_truth(query)
         results = {}
 
-        print(f"Ground Truth: {ground_truth}")
-
         for model_name, response in model_outputs.items():
-            print(f"Model: {model_name}, Response: {response}")
             score = token_overlap(response, ground_truth)
             results[model_name] = {
                 "score": f"{score}",

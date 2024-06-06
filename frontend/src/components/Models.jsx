@@ -110,6 +110,27 @@ export const Models = () => {
               {data && data["llama"] ? data["llama"]["response"] : ""}
             </p>
           </div>
+          {/* <div
+            className={`summary_box .gradient-border ${
+              "falcon" == bestModel && "best-response"
+            }`}
+          >
+            <h1
+              className={`font-satoshi font-bold text-xl ${
+                "falcon" == bestModel ? "text-black" : "orange_gradient"
+              }`}
+            >
+              ✦ Falcon 40b
+            </h1>
+            <br />
+            <p
+              className={`font-inter font-medium text-sm ${
+                "falcon" == bestModel ? "text-black" : "text-white"
+              }`}
+            >
+              {data && data["falcon"] ? data["falcon"]["response"] : ""}
+            </p>
+          </div> */}
         </div>
       ) : (
         <div></div>

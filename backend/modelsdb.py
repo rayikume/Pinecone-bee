@@ -39,7 +39,7 @@ urls = [
     
 vector_database = create_vector_db(urls)
 
-def get_response_ChatGPT3(database, query, tk=8):
+def get_response_ChatGPT3(database, query, tk=5):
     docs = database.similarity_search(query, tk=tk)
     docs_merge = " ".join([page.page_content for page in docs])
 
@@ -71,7 +71,7 @@ def get_response_ChatGPT3(database, query, tk=8):
 
     return response_formatted
 
-def get_response_ChatGPT4(database, query, tk=8):
+def get_response_ChatGPT4(database, query, tk=5):
     docs = database.similarity_search(query, tk=tk)
     docs_merge = " ".join([page.page_content for page in docs])
 
@@ -103,8 +103,8 @@ def get_response_ChatGPT4(database, query, tk=8):
 
     return response_formatted
 
-def get_response_llama(database, query):
-    docs = database.similarity_search(query)
+def get_response_llama(database, query, tk=5):
+    docs = database.similarity_search(query, tk)
     tmp = f"You are a AI Assistant that help answering the user any question regarding United Arab Emirates laws and culture, that include any questions about: Services of each ministry, Visa laws and regulations, jobs, education, business, moving to the uae, justice safety and law, visiting and exploring the uae, transportation, finance and investment, environment and energy, housing, health and fitness, passport and traveling guidlines, public hoildays, infrastructure social affairs, charity and G2G. By ONLY using this database consist of scrapped information from the offical UAE government website: {docs} If you feel like you don't have enough information to answer the question, just say I don't know. If the question provided not in any way related to United Arab Emirates, simply say that the question is not related to the subject. Your answers should be detailed."
 
     input = {
@@ -122,17 +122,33 @@ def get_response_llama(database, query):
 
     return "".join(output)
 
+# def get_response_falcon(database, query, tk=1):
+#     docs = database.similarity_search(query, tk)
+#     tmp = f"Answer the following question: {query}. ONLY use this database consist of scrapped information from the offical UAE government website: {docs}"
+
+#     input = {
+#         "prompt": tmp,
+#         "temperature": 0.5
+#     }
+
+#     output = replicate.run(
+#         "joehoover/falcon-40b-instruct:7d58d6bddc53c23fa451c403b2b5373b1e0fa094e4e0d1b98c3d02931aa07173",
+#         input=input
+#     )
+
+#     return "".join(output)
+
 evaluator = CustomEvaluator(vector_database)
 
 def evaluate_models(query):
     responses = {
         "ChatGPT3": get_response_ChatGPT3(vector_database, query),
         "ChatGPT4": get_response_ChatGPT4(vector_database, query),
-        "llama": get_response_llama(vector_database, query)
+        "llama": get_response_llama(vector_database, query),
+        # "falcon": get_response_falcon(vector_database, query),
     }
 
     evaluation_results = evaluator.evaluate(query, responses)
-    print(evaluation_results)
 
     return evaluation_results
 
