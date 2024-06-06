@@ -55,7 +55,7 @@
       hsla(215, 98%, 61%, 1) 0px,
       transparent 0%
     ),
-    radial-gradient(at 10% 29%, #d75504 0px, transparent 60%),
+    radial-gradient(at 10% 29%, hsl(23, 96%, 43%, 1) 0px, transparent 60%),
     radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 40%),
     radial-gradient(at 79% 53%, hsla(333, 71%, 66%, 1) 0px, transparent 50%);
   position: absolute;
@@ -135,5 +135,25 @@
 }
 
 .best-response {
-  border-style: hidden;
+  border: 3px solid #000000;
+  position: relative;
+  background: linear-gradient(
+    to right,
+    hsla(333, 71%, 66%, 1),
+    hsl(23, 82%, 57%, 1)
+  );
+}
+
+.best-response::before,
+.best-response::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  inset: 0;
+  z-index: -1;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.best-response::after {
+  filter: blur(3.5rem);
 }

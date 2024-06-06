@@ -52,11 +52,19 @@ export const Models = () => {
               "ChatGPT3" == bestModel && "best-response"
             }`}
           >
-            <h1 className="font-satoshi font-bold text-xl orange_gradient">
+            <h1
+              className={`font-satoshi font-bold text-xl ${
+                "ChatGPT3" == bestModel ? "text-black" : "orange_gradient"
+              }`}
+            >
               ✦ ChatGPT-3 Turbo
             </h1>
             <br />
-            <p className="font-inter font-medium text-sm text-white">
+            <p
+              className={`font-inter font-medium text-sm ${
+                "ChatGPT3" == bestModel ? "text-black" : "text-white"
+              }`}
+            >
               {data && data["ChatGPT3"] ? data["ChatGPT3"]["response"] : ""}
             </p>
           </div>
@@ -65,11 +73,19 @@ export const Models = () => {
               "ChatGPT4" == bestModel && "best-response"
             }`}
           >
-            <h1 className="font-satoshi font-bold text-xl orange_gradient">
+            <h1
+              className={`font-satoshi font-bold text-xl ${
+                "ChatGPT4" == bestModel ? "text-black" : "orange_gradient"
+              }`}
+            >
               ✦ ChatGPT-4
             </h1>
             <br />
-            <p className="font-inter font-medium text-sm text-white">
+            <p
+              className={`font-inter font-medium text-sm ${
+                "ChatGPT4" == bestModel ? "text-black" : "text-white"
+              }`}
+            >
               {data && data["ChatGPT4"] ? data["ChatGPT4"]["response"] : ""}
             </p>
           </div>
@@ -78,11 +94,19 @@ export const Models = () => {
               "llama" == bestModel && "best-response"
             }`}
           >
-            <h1 className="font-satoshi font-bold text-xl orange_gradient">
+            <h1
+              className={`font-satoshi font-bold text-xl ${
+                "llama" == bestModel ? "text-black" : "orange_gradient"
+              }`}
+            >
               ✦ Llama Chat
             </h1>
             <br />
-            <p className="font-inter font-medium text-sm text-white">
+            <p
+              className={`font-inter font-medium text-sm ${
+                "llama" == bestModel ? "text-black" : "text-white"
+              }`}
+            >
               {data && data["llama"] ? data["llama"]["response"] : ""}
             </p>
           </div>
