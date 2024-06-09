@@ -157,3 +157,19 @@
 .best-response::after {
   filter: blur(3.5rem);
 }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+}
+
+.appearing-text {
+  animation: fadeIn 0.5s;
+}

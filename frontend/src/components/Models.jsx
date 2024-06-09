@@ -48,7 +48,7 @@ export const Models = () => {
       ) : data ? (
         <div className="flex flex-row gap-5 m-10">
           <div
-            className={`summary_box .gradient-border ${
+            className={`appearing-text summary_box .gradient-border ${
               "ChatGPT3" == bestModel && "best-response"
             }`}
           >
@@ -69,7 +69,7 @@ export const Models = () => {
             </p>
           </div>
           <div
-            className={`summary_box .gradient-border ${
+            className={`appearing-text summary_box .gradient-border ${
               "ChatGPT4" == bestModel && "best-response"
             }`}
           >
@@ -90,7 +90,7 @@ export const Models = () => {
             </p>
           </div>
           <div
-            className={`summary_box .gradient-border ${
+            className={`appearing-text summary_box .gradient-border ${
               "llama" == bestModel && "best-response"
             }`}
           >
