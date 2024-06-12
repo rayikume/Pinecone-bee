@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import io from "socket.io-client";
 import { LoadingContext } from "../context/context";
 import { circlesLoop } from "../assets/assets";
+import TypingText from "./TypingText";
 
 const socket = io("http://localhost:5000");
 
@@ -65,7 +66,11 @@ export const Models = () => {
                 "ChatGPT3" == bestModel ? "text-black" : "text-white"
               }`}
             >
-              {data && data["ChatGPT3"] ? data["ChatGPT3"]["response"] : ""}
+              {data && data["ChatGPT3"] ? (
+                <TypingText text={data["ChatGPT3"]["response"]} speed={10} />
+              ) : (
+                ""
+              )}
             </p>
           </div>
           <div
@@ -86,7 +91,11 @@ export const Models = () => {
                 "ChatGPT4" == bestModel ? "text-black" : "text-white"
               }`}
             >
-              {data && data["ChatGPT4"] ? data["ChatGPT4"]["response"] : ""}
+              {data && data["ChatGPT4"] ? (
+                <TypingText text={data["ChatGPT4"]["response"]} speed={10} />
+              ) : (
+                ""
+              )}
             </p>
           </div>
           <div
@@ -107,7 +116,11 @@ export const Models = () => {
                 "llama" == bestModel ? "text-black" : "text-white"
               }`}
             >
-              {data && data["llama"] ? data["llama"]["response"] : ""}
+              {data && data["llama"] ? (
+                <TypingText text={data["llama"]["response"]} speed={10} />
+              ) : (
+                ""
+              )}
             </p>
           </div>
           {/* <div
