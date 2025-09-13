@@ -24,3 +24,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+__pycache__/
+*.py[cod]
+*.env.dev
+.pytest_cache/
+.mypy_cache/
+*.sqlite
+faiss_index*

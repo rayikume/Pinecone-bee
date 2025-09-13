@@ -29,12 +29,6 @@
 .main:after {
   content: "";
   background-size: 20px 20px;
-  background-image: linear-gradient(
-      to right,
-      rgb(82, 82, 82) 1px,
-      transparent 1px
-    ),
-    linear-gradient(to bottom, rgb(82, 82, 82) 1px, transparent 1px);
   background-color: #000000;
   z-index: 1;
   position: absolute;
@@ -49,15 +43,14 @@
   height: fit-content;
   z-index: 3;
   width: 100%;
-  max-width: 1000px;
   background-image: radial-gradient(
       at 27% 37%,
       hsla(215, 98%, 61%, 1) 0px,
       transparent 0%
     ),
-    radial-gradient(at 10% 29%, hsl(23, 96%, 43%, 1) 0px, transparent 60%),
-    radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 40%),
-    radial-gradient(at 79% 53%, hsla(333, 71%, 66%, 1) 0px, transparent 50%);
+    radial-gradient(at 0% 50%, hsl(23, 96%, 43%, 1) 0px, transparent 60%),
+    radial-gradient(at 50% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 40%),
+    radial-gradient(at 100% 50%, hsla(333, 71%, 66%, 1) 0px, transparent 50%);
   position: absolute;
   content: "";
   width: 100%;

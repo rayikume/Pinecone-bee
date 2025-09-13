@@ -1,10 +1,12 @@
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+
 def token_overlap(prediction, ground_truth):
     vectorizer = CountVectorizer().fit_transform([prediction, ground_truth])
     vectors = vectorizer.toarray()
     return cosine_similarity(vectors)[0, 1]
+
 
 class CustomEvaluator:
     def __init__(self, database):
@@ -23,7 +25,8 @@ class CustomEvaluator:
             score = token_overlap(response, ground_truth)
             results[model_name] = {
                 "score": f"{score}",
-                "response": f"{response}"
+                "response": f"{response}",
             }
 
         return results
+

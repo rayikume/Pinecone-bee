@@ -1,0 +1,22 @@
+Flask>=2.3
+Flask-SocketIO>=5.3
+python-dotenv>=1.0
+
+# LangChain + providers
+langchain>=0.2
+langchain-openai>=0.1
+langchain-community>=0.2
+openai>=1.30
+
+# Vector store
+faiss-cpu>=1.8
+
+# Scraping / loading
+selenium>=4.21
+webdriver-manager>=4.0
+
+# Evaluation
+scikit-learn>=1.4
+
+# External model runner
+replicate>=0.15
