@@ -1,4 +1,4 @@
-![PineconeBee](frontend/src/assets/PineconeBeea.svg)
+![PineconeBee](frontend/src/assets/Pinecone.svg)
 
 ## Description
 
